@@ -10,6 +10,7 @@ const userController = {
   },
   postLogin: passport.authenticate('local', {
     successRedirect: '/',
+    failureFlash: true,
     failureRedirect: '/users/login'
   }),
   postRegister: (req, res) => {
@@ -27,7 +28,8 @@ const userController = {
     User.findOne({ email })
       .then(user => {
         if (user) {
-          res.render('register', { name, email })
+          errors.push({ message: '此信箱已註冊。' })
+          return res.render('register', { name, email, errors })
         } else {
           User.create({
             name,
@@ -35,6 +37,7 @@ const userController = {
             password
           })
             .then(() => {
+              req.flash('success_msg', '註冊成功，請登入以使用')
               res.redirect('/users/login')
             })
         }

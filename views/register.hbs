@@ -1,10 +1,11 @@
 <div>
+  {{> message}}
   <form action='/users/register' method='POST'>
     <label for='name'>Name</label>
-    <input type='text' id='name' name='name' required />
+    <input type='text' id='name' name='name' value='{{name}}' required />
     <br />
     <label for='email'>Email</label>
-    <input type='email' id='email' name='email' required />
+    <input type='email' id='email' name='email' value='{{email}}' required />
     <br />
     <label for='password'>Password</label>
     <input type='password' id='password' name='password' required />
@@ -16,7 +17,7 @@
       name='confirmPassword'
       required
     />
-    <button type="submit">註冊</button>
-    <a href="/users/login">已經有帳戶？返回登入</a>
+    <button type='submit'>註冊</button>
+    <a href='/users/login'>已經有帳戶？返回登入</a>
   </form>
 </div>
