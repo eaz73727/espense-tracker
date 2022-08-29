@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
+const flash = require('connect-flash')
 
 const routes = require('./routes')
 const usePassport = require('./config/passport')
@@ -14,7 +15,6 @@ const PORT = process.env.PORT
 app.engine('hbs', exphbs.engine({ extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
-app.use(express.urlencoded({ extended: true }))
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
@@ -22,10 +22,14 @@ app.use(session({
 }))
 
 usePassport(app)
-
-app.use((req,res,next)=>{
+app.use(flash())
+app.use(express.urlencoded({ extended: true }))
+app.use((req, res, next) => {
   res.locals.user = req.user
   res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
+  next()
 })
 app.use(routes)
 
