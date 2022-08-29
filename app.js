@@ -3,6 +3,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const express = require('express')
 const exphbs = require('express-handlebars')
+const session = require('express-session')
 
 const routes = require('./routes')
 require('./config/mongoose')
@@ -11,6 +12,12 @@ const PORT = process.env.PORT
 
 app.engine('hbs', exphbs.engine({ extname: '.hbs' }))
 app.set('view engine', 'hbs')
+
+app.use(session({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
 
 app.use(routes)
 
