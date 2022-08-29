@@ -25,7 +25,7 @@ module.exports = app => {
               return done(null, user, req.flash('success_msg', '成功登入！'))
             })
         })
-        .catch(err => console.log(err))
+        .catch(err => done(err))
     }))
 
 
