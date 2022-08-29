@@ -6,6 +6,7 @@ const exphbs = require('express-handlebars')
 const session = require('express-session')
 
 const routes = require('./routes')
+const usePassport = require('./config/passport')
 require('./config/mongoose')
 const app = express()
 const PORT = process.env.PORT
@@ -13,6 +14,7 @@ const PORT = process.env.PORT
 app.engine('hbs', exphbs.engine({ extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
+usePassport(app)
 app.use(express.urlencoded({ extended: true }))
 app.use(session({
   secret: process.env.SECRET,
