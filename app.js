@@ -13,6 +13,7 @@ const PORT = process.env.PORT
 app.engine('hbs', exphbs.engine({ extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
+app.use(express.urlencoded({ extended: true }))
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
