@@ -1,0 +1,19 @@
+<form action='/tracker/new' method='POST'>
+  <h2>輸入您的支出</h2>
+  <br />
+  <label for='name'>Name</label>
+  <input type='text' id='name' name='name' required />
+  <br />
+  <label for='date'>Date</label>
+  <input type='datetime-local' id='date' name='date' required />
+  <br />
+  <label for='category'>category</label>
+  <select name='category' id='category'>
+    <option value='' disabled>請選擇</option>
+  </select>
+  <br />
+  <label for='amount'>amount</label>
+  <input type='number' name='amount' id='amount' required />
+  <button type='submit'>新增</button>
+  <a href='/tracker'>back</a>
+</form>
