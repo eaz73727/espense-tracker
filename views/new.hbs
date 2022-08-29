@@ -8,12 +8,32 @@
   <input type='datetime-local' id='date' name='date' required />
   <br />
   <label for='category'>category</label>
-  <select name='category' id='category'>
-    <option value='' disabled>請選擇</option>
-  </select>
+  <input
+    type='text'
+    list='category-list'
+    name='category'
+    id='category'
+    required
+  />
+  <datalist id='category-list'>
+    <option value='家居物業'></option>
+    <option value='交通出行'></option>
+    <option value='休閒娛樂'></option>
+    <option value='餐飲食品'></option>
+    <option value='其他'></option>
+  </datalist>
   <br />
   <label for='amount'>amount</label>
   <input type='number' name='amount' id='amount' required />
+  <br />
+  <label for='income-or-expense'>收入或支出</label>
+  <select name='incomeOrExpense' id='incone-or-expense'>
+    <option value='請選擇' required></option>
+    <option value='收入'></option>
+    <option value='支出'></option>
+  </select>
+  <br />
   <button type='submit'>新增</button>
+  <br />
   <a href='/tracker'>back</a>
 </form>
