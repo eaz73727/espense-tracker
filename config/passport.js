@@ -1,6 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const User = require('../models/user')
+const bcrypt = require('bcryptjs')
 
 module.exports = app => {
   app.use(passport.initialize())
@@ -16,10 +17,13 @@ module.exports = app => {
           if (!user) {
             return done(null, false, req.flash('warning_msg', '帳號或密碼不符'))
           }
-          if (password !== user.password) {
-            return done(null, false, req.flash('warning_msg', '帳號或密碼不符'))
-          }
-          return done(null, user, req.flash('success_msg', '成功登入！'))
+          return bcrypt.compare(password, user.password)
+            .then(isMatch => {
+              if (!isMatch) {
+                return done(null, false, req.flash('warning_msg', '帳號或密碼不符'))
+              }
+              return done(null, user, req.flash('success_msg', '成功登入！'))
+            })
         })
         .catch(err => console.log(err))
     }))

@@ -1,5 +1,6 @@
 const passport = require("passport")
 const User = require("../models/user")
+const bcrypt = require('bcryptjs')
 
 const userController = {
   pageLogin: (req, res) => {
@@ -31,17 +32,21 @@ const userController = {
           errors.push({ message: '此信箱已註冊。' })
           return res.render('register', { name, email, errors })
         } else {
-          User.create({
-            name,
-            email,
-            password
-          })
-            .then(() => {
-              req.flash('success_msg', '註冊成功，請登入以使用')
-              res.redirect('/users/login')
+          bcrypt
+            .genSalt(10)
+            .then(salt => bcrypt.hash(password, salt))
+            .then(hash => {
+              User.create({
+                name,
+                email,
+                password: hash
+              })
+                .then(() => {
+                  req.flash('success_msg', '註冊成功，請登入以使用')
+                  res.redirect('/users/login')
+                })
             })
         }
-
       })
       .catch(err => console.log(err))
   },
