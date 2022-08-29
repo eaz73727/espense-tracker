@@ -14,13 +14,14 @@ const PORT = process.env.PORT
 app.engine('hbs', exphbs.engine({ extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
-usePassport(app)
 app.use(express.urlencoded({ extended: true }))
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true
 }))
+
+usePassport(app)
 
 app.use(routes)
 
