@@ -1,0 +1,11 @@
+{{#if success_msg}}
+  <div>{{success_msg}}</div>
+{{/if}}
+{{#if warning_msg}}
+  <div>{{warning_msg}}</div>
+{{/if}}
+{{#if errors}}
+  {{#each errors}}
+    <ul>{{this.message}}</ul>
+  {{/each}}
+{{/if}}
