@@ -11,23 +11,22 @@ module.exports = app => {
     usernameField: 'email',
     passReqToCallback: true
   },
-    (req, email, password, done) => {
-      User.findOne({ email })
-        .then(user => {
-          if (!user) {
-            return done(null, false, req.flash('warning_msg', '帳號或密碼不符'))
-          }
-          return bcrypt.compare(password, user.password)
-            .then(isMatch => {
-              if (!isMatch) {
-                return done(null, false, req.flash('warning_msg', '帳號或密碼不符'))
-              }
-              return done(null, user, req.flash('success_msg', '成功登入！'))
-            })
-        })
-        .catch(err => done(err))
-    }))
-
+  (req, email, password, done) => {
+    User.findOne({ email })
+      .then(user => {
+        if (!user) {
+          return done(null, false, req.flash('warning_msg', '帳號或密碼不符'))
+        }
+        return bcrypt.compare(password, user.password)
+          .then(isMatch => {
+            if (!isMatch) {
+              return done(null, false, req.flash('warning_msg', '帳號或密碼不符'))
+            }
+            return done(null, user, req.flash('success_msg', '成功登入！'))
+          })
+      })
+      .catch(err => done(err))
+  }))
 
   passport.serializeUser((user, done) => {
     done(null, user.id)

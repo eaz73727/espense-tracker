@@ -1,7 +1,6 @@
 const User = require('../models/user')
 const Record = require('../models/record')
 const Category = require('../models/category')
-const record = require('../models/record')
 
 const expenseTrackerController = {
   homePage: (req, res, next) => {
@@ -16,7 +15,7 @@ const expenseTrackerController = {
             records = records.map(record => {
               Array.from(options, option => {
                 if (record.categoryId.equals(option._id)) {
-                  return record.categoryName = option.name
+                  record.categoryName = option.name
                 }
                 return option
               })
@@ -58,7 +57,6 @@ const expenseTrackerController = {
       .catch(err => {
         return next(err)
       })
-
   }
 }
 
