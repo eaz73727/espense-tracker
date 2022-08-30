@@ -15,6 +15,7 @@ const expenseTrackerController = {
             records = records.map(record => {
               Array.from(options, option => {
                 if (record.categoryId.equals(option._id)) {
+                  record.date = record.date.toLocaleString()
                   record.categoryName = option.name
                 }
                 return option
@@ -57,7 +58,24 @@ const expenseTrackerController = {
       .catch(err => {
         return next(err)
       })
+  },
+  editTrackerPage: (req, res, next) => {
+    const userId = req.user._id
+    const _id = req.params.id
+    Record.findOne({ userId, _id })
+      .lean()
+      .then(record => {
+        Category.findById(record.categoryId)
+          .lean()
+          .then(option => {
+            record.categoryName = option.name
+            record.date = record.date.toISOString().split('.')[0]
+            return res.render('edit', { record })
+          })
+      })
+      .catch(err => next(err))
   }
+
 }
 
 module.exports = expenseTrackerController

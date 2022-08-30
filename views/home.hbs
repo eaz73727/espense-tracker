@@ -3,11 +3,11 @@
 <ul>
   {{#each records}}
   <li>{{this.name}} {{this.amount}} {{this.date}} {{this.categoryName}} <form action="/tracker/{{this._id}}?_method=DELETE" method="POST">
-  <a href="/tracker/{{this._id}}">修改</a>
+  <a href="/tracker/{{this._id}}/edit">修改</a>
   <button type="submit">刪除</button>
   </form></li>
   {{/each}}
 </ul>
   
-<a href="/users/lotout">登出</a>
+<a href="/users/logout">登出</a>
 <a href="/tracker/new">new</a>
