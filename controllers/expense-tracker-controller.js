@@ -8,22 +8,22 @@ const expenseTrackerController = {
     const userId = req.user._id
     Record.find({ userId })
       .lean()
-      .sort({ _id: 'asc' })
+      .sort({ _id: 'desc' })
       .then(records => {
         return Category.find(records.categoryId)
           .lean()
           .then(options => {
-            const recordList = Array.from(records, record => {
-              options.map(option => {
+            records = records.map(record => {
+              Array.from(options, option => {
                 if (record.categoryId.equals(option._id)) {
                   return record.categoryName = option.name
                 }
+                return option
               })
               return record
             })
-            return recordList
+            return res.render('home', { records })
           })
-          .then(records => res.render('home', { records }))
       })
       .catch(err => next(err))
   },
