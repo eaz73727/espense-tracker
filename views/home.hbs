@@ -2,7 +2,10 @@
 <h1>老爸的私房錢！</h1>
 <ul>
   {{#each records}}
-  <li>{{this.name}} {{this.amount}} {{this.date}} {{this.categoryName}}</li>
+  <li>{{this.name}} {{this.amount}} {{this.date}} {{this.categoryName}} <form action="/tracker/{{this._id}}?_method=DELETE" method="POST">
+  <a href="/tracker/{{this._id}}">修改</a>
+  <button type="submit">刪除</button>
+  </form></li>
   {{/each}}
 </ul>
   
