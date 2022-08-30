@@ -98,6 +98,13 @@ const expenseTrackerController = {
             res.redirect('/tracker')
           })
       })
+  },
+  deleteTracker: (req, res, next) => {
+    const userId = req.user._id
+    const _id = req.params.id
+    Record.findOneAndDelete({ id: _id, userId })
+      .then(() => res.redirect('/tracker'))
+      .catch(err => next(err))
   }
 
 }
