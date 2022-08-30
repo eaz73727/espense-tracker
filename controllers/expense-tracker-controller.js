@@ -1,20 +1,23 @@
-const User = require('../models/user')
 const Record = require('../models/record')
 const Category = require('../models/category')
 
 const expenseTrackerController = {
   homePage: (req, res, next) => {
     const userId = req.user._id
+    // 找出所有的支出
     Record.find({ userId })
       .lean()
       .sort({ date: 'desc' })
       .then(records => {
+        // 透過支出表單的 CategoryId 從 Category表單找到這個 Category 的名稱(饒口
         return Category.find(records.categoryId)
           .lean()
           .then(options => {
             records = records.map(record => {
               Array.from(options, option => {
+                // mongoose.js equals
                 if (record.categoryId.equals(option._id)) {
+                  // date.toLocalString() 轉換成本地時間字串
                   record.date = record.date.toLocaleString()
                   record.categoryName = option.name
                 }
@@ -33,6 +36,10 @@ const expenseTrackerController = {
   postNewTracker: (req, res, next) => {
     const { name, date, category, amount } = req.body
     const userId = req.user._id
+    // 透過名稱找尋是否有相同的 Category ，如果沒有 新增一個
+    // 彈性設置標籤可以讓使用者細分自己的支出項目 Ex:機車耗材。
+    // 而名稱可以著重在 "花了什麼" 上面
+    // Ex: category:機車耗材 name: 機油
     Category.findOne({ name: category })
       .then(option => {
         if (!option) {
@@ -69,6 +76,9 @@ const expenseTrackerController = {
           .lean()
           .then(option => {
             record.categoryName = option.name
+            // 把 date 物件轉換成 ISO 標準的 String 並且透過 split 以 . 為索引切割
+            // Ex: 2022-08-30 18:06:00.000Z => ['2022-08-30 18:06:00', '000Z']
+            // 以下把陣列第0項的參數傳入物件索引 record.date 
             record.date = record.date.toISOString().split('.')[0]
             return res.render('edit', { record })
           })
@@ -107,15 +117,15 @@ const expenseTrackerController = {
         Record.find({ categoryId: record.categoryId, userId })
           .lean()
           .then(records => {
+            // 如果這個類別沒有其他的紀錄
             if (!records.length) {
-              console.log(record.categoryId)
-              console.log(userId)
+              // 刪除沒有任何紀錄的類別
               return Category.findOneAndDelete({ _id: record.categoryId })
             }
           })
       })
-    .then(() => res.redirect('/tracker'))
-    .catch(err => next(err))
+      .then(() => res.redirect('/tracker'))
+      .catch(err => next(err))
   }
 
 }
