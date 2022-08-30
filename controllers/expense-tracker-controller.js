@@ -103,8 +103,19 @@ const expenseTrackerController = {
     const userId = req.user._id
     const _id = req.params.id
     Record.findOneAndDelete({ id: _id, userId })
-      .then(() => res.redirect('/tracker'))
-      .catch(err => next(err))
+      .then(record => {
+        Record.find({ categoryId: record.categoryId, userId })
+          .lean()
+          .then(records => {
+            if (!records.length) {
+              console.log(record.categoryId)
+              console.log(userId)
+              return Category.findOneAndDelete({ _id: record.categoryId })
+            }
+          })
+      })
+    .then(() => res.redirect('/tracker'))
+    .catch(err => next(err))
   }
 
 }
