@@ -7,7 +7,7 @@ const expenseTrackerController = {
     const userId = req.user._id
     Record.find({ userId })
       .lean()
-      .sort({ _id: 'desc' })
+      .sort({ date: 'desc' })
       .then(records => {
         return Category.find(records.categoryId)
           .lean()
@@ -74,6 +74,30 @@ const expenseTrackerController = {
           })
       })
       .catch(err => next(err))
+  },
+  putTracker: (req, res, next) => {
+    const userId = req.user._id
+    const _id = req.params.id
+    const { name, date, category, amount } = req.body
+    if (!name || date || category || amount) {
+      throw new Error('所有欄位都是必填呦！')
+    }
+    Category.findOne({ name: category })
+      .then(option => {
+        if (!option) {
+          return Category.create({ name: category })
+        }
+        return option
+      })
+      .then(option => {
+        console.log(option)
+        req.body.categoryId = option._id
+        Record.findOneAndUpdate({ id: _id, userId }, req.body)
+          .then(() => {
+            console.log('done')
+            res.redirect('/tracker')
+          })
+      })
   }
 
 }
