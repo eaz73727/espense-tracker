@@ -1,4 +1,9 @@
 {{> message}}
 <h1>老爸的私房錢！</h1>
+<ul>
+  {{#each records}}
+  <li>{{this.name}} {{this.amount}} {{this.date}} {{this.categoryName}}</li>
+</ul>
+  {{/each}}
 <a href="/users/lotout">登出</a>
 <a href="/tracker/new">new</a>

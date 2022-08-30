@@ -1,10 +1,31 @@
 const User = require('../models/user')
 const Record = require('../models/record')
 const Category = require('../models/category')
+const record = require('../models/record')
 
 const expenseTrackerController = {
-  homePage: (req, res) => {
-    res.render('home')
+  homePage: (req, res, next) => {
+    const userId = req.user._id
+    Record.find({ userId })
+      .lean()
+      .sort({ _id: 'asc' })
+      .then(records => {
+        return Category.find(records.categoryId)
+          .lean()
+          .then(options => {
+            const recordList = Array.from(records, record => {
+              options.map(option => {
+                if (record.categoryId.equals(option._id)) {
+                  return record.categoryName = option.name
+                }
+              })
+              return record
+            })
+            return recordList
+          })
+          .then(records => res.render('home', { records }))
+      })
+      .catch(err => next(err))
   },
   newTrackerPage: (req, res) => {
     res.render('new')
@@ -27,7 +48,7 @@ const expenseTrackerController = {
           amount,
           date,
           userId,
-          categoryId: option.id
+          categoryId: option._id
         })
       })
       .then(() => {
