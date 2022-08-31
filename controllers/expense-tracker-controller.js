@@ -10,10 +10,12 @@ const expenseTrackerController = {
       .sort({ date: 'desc' })
       .then(records => {
         // 透過支出表單的 CategoryId 從 Category表單找到這個 Category 的名稱(饒口
+        let totalAmount = 0
         return Category.find(records.categoryId)
           .lean()
           .then(options => {
             records = records.map(record => {
+              totalAmount += record.amount
               Array.from(options, option => {
                 // mongoose.js equals
                 if (record.categoryId.equals(option._id)) {
@@ -25,8 +27,10 @@ const expenseTrackerController = {
               })
               return record
             })
-            return res.render('home', { records })
+
+            return res.render('home', { records, totalAmount })
           })
+
       })
       .catch(err => next(err))
   },
