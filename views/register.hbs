@@ -1,23 +1,70 @@
-<div>
-  {{> message}}
-  <form action='/users/register' method='POST'>
-    <label for='name'>Name</label>
-    <input type='text' id='name' name='name' value='{{name}}' required />
-    <br />
-    <label for='email'>Email</label>
-    <input type='email' id='email' name='email' value='{{email}}' required />
-    <br />
-    <label for='password'>Password</label>
-    <input type='password' id='password' name='password' required />
-    <br />
-    <label for='confirm-password'>Confirm Password</label>
-    <input
-      type='password'
-      id='confirm-password'
-      name='confirmPassword'
-      required
-    />
-    <button type='submit'>註冊</button>
-    <a href='/users/login'>已經有帳戶？返回登入</a>
-  </form>
+<div class="container p-5">
+  <div class="row">
+    <div class="col-6 m-auto">
+      <div class="card">
+        <div class="card-body ">
+          <h4 class="card-title mb-3" style="color:#267b98">註冊以使用記帳本</h4>
+          {{> message}}
+          <hr>
+          <form action='/users/register' method='POST'>
+            <div class='mb-3'>
+              <label for='name' class='form-label'>名稱</label>
+              <input
+                type='text'
+                class='form-control'
+                id='name'
+                name='name'
+                value='{{name}}'
+                aria-describedby='nameHelp'
+                placeholder=''
+              />
+            </div>
+              <div class='mb-3'>
+                <label for='email' class='form-label'>電子信箱</label>
+                <input
+                  type='email'
+                  class='form-control'
+                  id='email'
+                  aria-describedby='emailHelp'
+                  name='email'
+                  value='{{email}}'
+                  required
+                />
+              <div
+                id='emailHelp'
+                class='form-text'
+              >我們不會散布您的信箱，也不會寄送任何促銷信件給您。
+              </div>
+            </div>
+            <div class='mb-3'>
+              <label for='password' class='form-label'>密碼</label>
+              <input
+                type='password'
+                class='form-control'
+                id='password'
+                name='password'
+                required
+              />
+            </div>
+            <div class='mb-3'>
+              <label for='confirmPassword' class='form-label'>確認密碼</label>
+              <input
+                type='password'
+                class='form-control'
+                id='confirmPassword'
+                name='confirmPassword'
+                required
+              />
+            </div>
+            <div>
+              <button type='submit' class='btn btn-primary'>
+                註冊
+              </button>
+              <a href="/users/login" class="btn btn-secondary">返回</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
