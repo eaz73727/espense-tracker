@@ -2,10 +2,12 @@ const express = require('express')
 const router = express.Router()
 const expenseTrackerController = require('../../controllers/expense-tracker-controller')
 
+
 router.delete('/:id', expenseTrackerController.deleteTracker)
 router.put('/:id', expenseTrackerController.putTracker)
 router.get('/:id/edit', expenseTrackerController.editTrackerPage)
 router.post('/new', expenseTrackerController.postNewTracker)
+router.get('/partial', expenseTrackerController.partialTracker)
 router.get('/new', expenseTrackerController.newTrackerPage)
 router.get('/', expenseTrackerController.homePage)
 

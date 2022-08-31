@@ -21,6 +21,7 @@ const expenseTrackerController = {
                 if (record.categoryId.equals(option._id)) {
                   // date.toLocalString() 轉換成本地時間字串
                   record.date = record.date.toLocaleString()
+                  // 優化方向，未實裝
                   record.categoryName = option.name
                 }
                 return option
@@ -93,7 +94,7 @@ const expenseTrackerController = {
     const _id = req.params.id
     const { name, date, category, amount } = req.body
     if (!name || date || category || amount) {
-      throw new Error('所有欄位都是必填呦！')
+      throw new Error('所有欄位都是必填！')
     }
     Category.findOne({ name: category })
       .then(option => {
@@ -128,6 +129,34 @@ const expenseTrackerController = {
           })
       })
       .then(() => res.redirect('/tracker'))
+      .catch(err => next(err))
+  },
+  partialTracker: (req, res, next) => {
+    const { category } = req.query
+    if (category === 'all') {
+      res.redirect('/')
+    }
+    Record.find({ categoryId: category })
+      .lean()
+      .sort({ date: 'desc' })
+      .then(records => {
+        let totalAmount = 0
+        Category.find()
+          .lean()
+          .sort({ name: 'desc' })
+          .then(options => {
+            records.map(record => {
+              record.date = record.date.toLocaleString()
+              totalAmount += record.amount
+            })
+            options.map(option => {
+              if (option._id.equals(category)) {
+                option.selected = 'selected'
+              }
+            })
+            res.render('home', { records, options, totalAmount })
+          })
+      })
       .catch(err => next(err))
   }
 

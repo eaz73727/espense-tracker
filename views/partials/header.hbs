@@ -1,6 +1,11 @@
 <!-- As a link -->
-<nav class="navbar navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">廣志の私帳</a>
-  </div>
-</nav>
+<header>
+  <nav class="navbar navbar-light bg-light justify-content-between">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">家庭記帳本</a>
+      {{#if isAuthenticated}}
+        <a class="btn btn-outline-secondary" href="/users/logout">登出</a>
+      {{/if}}
+    </div>
+  </nav>
+</header>
