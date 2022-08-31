@@ -40,6 +40,9 @@ const expenseTrackerController = {
   postNewTracker: (req, res, next) => {
     const { name, date, category, amount } = req.body
     const userId = req.user._id
+    if (!name || !date || !category || !amount) {
+      throw new Error('所有欄位都是必填！')
+    }
     // 透過名稱找尋是否有相同的 Category ，如果沒有 新增一個
     // 彈性設置標籤可以讓使用者細分自己的支出項目 Ex:機車耗材。
     // 而名稱可以著重在 "花了什麼" 上面
@@ -93,7 +96,8 @@ const expenseTrackerController = {
     const userId = req.user._id
     const _id = req.params.id
     const { name, date, category, amount } = req.body
-    if (!name || date || category || amount) {
+    console.log(req.body)
+    if (!name || !date || !category || !amount) {
       throw new Error('所有欄位都是必填！')
     }
     Category.findOne({ name: category })
@@ -112,6 +116,7 @@ const expenseTrackerController = {
             res.redirect('/tracker')
           })
       })
+      .catch(err => next(err))
   },
   deleteTracker: (req, res, next) => {
     const userId = req.user._id
