@@ -11,7 +11,7 @@ const expenseTrackerController = {
       .then(records => {
         // 透過支出表單的 CategoryId 從 Category表單找到這個 Category 的名稱(饒口
         let totalAmount = 0
-        return Category.find(records.categoryId)
+        return Category.find()
           .lean()
           .then(options => {
             records = records.map(record => {
@@ -27,8 +27,7 @@ const expenseTrackerController = {
               })
               return record
             })
-
-            return res.render('home', { records, totalAmount })
+            return res.render('home', { records, totalAmount, options })
           })
 
       })

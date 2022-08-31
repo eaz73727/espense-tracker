@@ -1,6 +1,10 @@
 {{> message}}
-<h1>老爸的私房錢！</h1>
 {{totalAmount}}
+<select name="category" id="category">
+  {{#each options}}
+  <option value="{{this.id}}">{{this.name}}</option>
+  {{/each}}
+</select>
 <ul>
   {{#each records}}
   <li>{{this.name}} {{this.amount}} {{this.date}} {{this.categoryName}} <form action="/tracker/{{this._id}}?_method=DELETE" method="POST">
