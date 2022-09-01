@@ -97,8 +97,7 @@ const expenseTrackerController = {
   putTracker: (req, res, next) => {
     const userId = req.user._id
     const _id = req.params.id
-    const { name, date, category, amount } = req.body
-    console.log(req.body)
+    const { name, date, category, amount, categoryId } = req.body
     if (!name || !date || !category || !amount) {
       throw new Error('所有欄位都是必填！')
     }
@@ -110,13 +109,18 @@ const expenseTrackerController = {
         return option
       })
       .then(option => {
-        console.log(option)
         req.body.categoryId = option._id
-        Record.findOneAndUpdate({ id: _id, userId }, req.body)
-          .then(() => {
-            console.log('done')
-            res.redirect('/tracker')
+        return Record.findOneAndUpdate({ id: _id, userId }, req.body)
+      })
+      .then(() => {
+        // 沒有東西的標籤沒有存在的必要
+        Record.findOne({ categoryId: categoryId })
+          .then(record => {
+            if (!record) return Category.findByIdAndDelete(categoryId)
           })
+      })
+      .then(() => {
+        res.redirect('/tracker')
       })
       .catch(err => next(err))
   },
