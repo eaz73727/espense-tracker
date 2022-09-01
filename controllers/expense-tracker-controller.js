@@ -30,6 +30,7 @@ const expenseTrackerController = {
               })
               return record
             })
+            console.log(records)
             return res.render('home', { records, totalAmount, options })
           })
       })
