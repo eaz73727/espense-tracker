@@ -30,7 +30,6 @@ const expenseTrackerController = {
               })
               return record
             })
-            console.log(records)
             return res.render('home', { records, totalAmount, options })
           })
       })
@@ -87,7 +86,7 @@ const expenseTrackerController = {
             record.categoryName = option.name
             // 把 date 物件轉換成 ISO 標準的 String 並且透過 split 以 . 為索引切割
             // Ex: 2022-08-30 18:06:00.000Z => ['2022-08-30 18:06:00', '000Z']
-            // 以下把陣列第0項的參數傳入物件索引 record.date 
+            // 以下把陣列第0項的參數傳入物件索引 record.date
             record.date = record.date.toISOString().split('.')[0]
             return res.render('edit', { record })
           })

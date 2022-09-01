@@ -6,7 +6,6 @@ const Category = require('../category')
 const bcrypt = require('bcryptjs')
 
 db.once('open', () => {
-
   bcrypt
     .genSalt(10)
     .then(salt => bcrypt.hash(user.password, salt))
@@ -23,7 +22,7 @@ db.once('open', () => {
         .then(options => {
           return Promise.all(
             Array.from(records, record => {
-              options.map(option => {
+              options.forEach(option => {
                 if (record.category === option.name) {
                   record.categoryId = option._id
                   record.userId = user._id

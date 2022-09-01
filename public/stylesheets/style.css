@@ -42,7 +42,11 @@ h1.amount span{
 .edit a, button {
   all:unset;
   cursor: pointer;
+  font-weight: bold;
 }
 .edit a:hover, button:hover{
   color:rgb(56, 100, 223);
+}
+.icons{
+  width:3.2rem;
 }
