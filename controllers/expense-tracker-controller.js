@@ -139,7 +139,7 @@ const expenseTrackerController = {
   partialTracker: (req, res, next) => {
     const { category } = req.query
     if (category === 'all') {
-      res.redirect('/')
+      return res.redirect('/')
     }
     Record.find({ categoryId: category })
       .lean()

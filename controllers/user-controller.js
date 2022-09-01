@@ -28,7 +28,10 @@ const userController = {
     }
     User.findOne({ email })
       .then(user => {
-        if (user) throw new Error('信箱已註冊')
+        if (user) {
+          errors.push({ message: '信箱已註冊！' })
+          return res.render('register', { email, name, errors })
+        }
         return bcrypt
           .genSalt(10)
           .then(salt => bcrypt.hash(password, salt))
