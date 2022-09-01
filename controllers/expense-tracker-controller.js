@@ -17,11 +17,11 @@ const expenseTrackerController = {
           .then(options => {
             records = records.map(record => {
               totalAmount += record.amount
+              // date.toLocalString() 轉換成本地時間字串
+              record.date = record.date.toLocaleString()
               Array.from(options, option => {
                 // mongoose.js equals
                 if (record.categoryId.equals(option._id)) {
-                  // date.toLocalString() 轉換成本地時間字串
-                  record.date = record.date.toLocaleString()
                   record.categoryName = option.name
                   record.icon = setCategoryIcon(option.name)
                 }
@@ -29,10 +29,8 @@ const expenseTrackerController = {
               })
               return record
             })
-            console.log(records)
             return res.render('home', { records, totalAmount, options })
           })
-
       })
       .catch(err => next(err))
   },
@@ -152,14 +150,20 @@ const expenseTrackerController = {
           .lean()
           .sort({ name: 'desc' })
           .then(options => {
-            records.map(record => {
+            records = records.map(record => {
               record.date = record.date.toLocaleString()
               totalAmount += record.amount
-            })
-            options.map(option => {
-              if (option._id.equals(category)) {
-                option.selected = 'selected'
-              }
+              Array.from(options, option => {
+                if (record.categoryId.equals(option._id)) {
+                  record.categoryName = option.name
+                  record.icon = setCategoryIcon(option.name)
+                }
+                if (option._id.equals(category)) {
+                  option.selected = 'selected'
+                }
+                return option
+              })
+              return record
             })
             res.render('home', { records, options, totalAmount })
           })
