@@ -1,5 +1,6 @@
 const Record = require('../models/record')
 const Category = require('../models/category')
+const { setCategoryIcon } = require('../helpers/icon-helper')
 
 const expenseTrackerController = {
   homePage: (req, res, next) => {
@@ -21,13 +22,14 @@ const expenseTrackerController = {
                 if (record.categoryId.equals(option._id)) {
                   // date.toLocalString() 轉換成本地時間字串
                   record.date = record.date.toLocaleString()
-                  // 優化方向，未實裝
                   record.categoryName = option.name
+                  record.icon = setCategoryIcon(option.name)
                 }
                 return option
               })
               return record
             })
+            console.log(records)
             return res.render('home', { records, totalAmount, options })
           })
 
