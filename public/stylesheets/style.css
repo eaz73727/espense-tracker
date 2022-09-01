@@ -1,0 +1,48 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+.list:nth-child(even){
+  background-color: rgb(224, 224, 224);
+}
+.list:nth-child(odd){
+  background-color: #FAFAFA;
+}
+.fa{
+  font-size:3rem;
+  color:rgb(68, 184, 230);
+  align-self: center;
+}
+.list-name{
+  font-weight: bold;
+  font-size:2rem;
+}
+.calendar{
+  color:rgb(185, 185, 185)
+}
+.list-date{
+  padding-top:2px;
+  font-size: .8rem;
+  color:gray;
+}
+h1.amount{
+  color:coral;
+}
+h1.amount span{
+  color:black;
+}
+
+.edit{
+  text-decoration: none;
+  font-size: 1.4rem;
+  color:rgb(24, 24, 24);
+}
+.edit a, button {
+  all:unset;
+  cursor: pointer;
+}
+.edit a:hover, button:hover{
+  color:rgb(56, 100, 223);
+}

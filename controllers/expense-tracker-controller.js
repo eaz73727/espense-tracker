@@ -14,6 +14,7 @@ const expenseTrackerController = {
         let totalAmount = 0
         return Category.find()
           .lean()
+          .sort({ name: 'desc' })
           .then(options => {
             records = records.map(record => {
               totalAmount += record.amount

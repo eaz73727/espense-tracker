@@ -16,6 +16,7 @@ const PORT = process.env.PORT
 app.engine('hbs', exphbs.engine({ extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
+app.use(express.static('public'))
 app.use(
   session({
     secret: process.env.SECRET,
@@ -23,7 +24,6 @@ app.use(
     saveUninitialized: true
   })
 )
-
 usePassport(app)
 app.use(flash())
 app.use(express.urlencoded({ extended: true }))
