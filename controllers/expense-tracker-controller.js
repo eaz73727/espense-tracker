@@ -30,7 +30,8 @@ const expenseTrackerController = {
               })
               return record
             })
-            return res.render('home', { records, totalAmount, options })
+            const noFile = !records.length
+            return res.render('home', { noFile, records, totalAmount, options })
           })
       })
       .catch(err => next(err))
@@ -166,7 +167,8 @@ const expenseTrackerController = {
               })
               return record
             })
-            res.render('home', { records, options, totalAmount })
+            const noFile = !records.length
+            res.render('home', { noFile, records, options, totalAmount })
           })
       })
       .catch(err => next(err))

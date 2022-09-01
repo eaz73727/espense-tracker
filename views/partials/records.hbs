@@ -1,0 +1,23 @@
+{{#each records}}
+    <div class="col-3"></div>
+    <div class="col-6 d-flex justify-content-between align-items-center list">
+      <div class="d-flex flex-row">
+        <div class="d-flex icons">
+          <i class="fa {{this.icon}}"></i>
+        </div>
+        <div class="d-flex flex-column ms-3 justify-content-center">
+          <h4 class="list-name pt-2">{{this.name}}</h4>
+          <p class="list-date"><i class="fa-solid fa-calendar-days calendar"></i> {{this.date}}</p>
+        </div>
+      </div>
+      <h3>{{this.amount}}元</h3>
+    </div>
+    <div class="col-2 d-flex align-items-center">
+      <div>
+        <form class="d-flex justify-content-around edit" action="/tracker/{{this._id}}?_method=DELETE" method="POST">
+          <a href="/tracker/{{this._id}}/edit">修改</a>
+          <button class="ms-4" type="submit">刪除</button>
+        </form>
+      </div>
+    </div>
+    {{/each}}
