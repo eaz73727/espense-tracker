@@ -12,7 +12,7 @@ A application for user can sign in and make your personal expense tracker that y
 ![image](https://github.com/eaz73727/espense-tracker/blob/main/tracker.jpg)
 ## Getting Started  
 1. clone  
- `git clone https://github.com/eaz73727/espense-tracker.git`   
+ `git clone https://github.com/eaz73727/expense-tracker.git`   
 2. install modules  
  `npm install`  
 3. check .env.example for setting up your global var  
