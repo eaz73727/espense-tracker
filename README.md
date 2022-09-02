@@ -9,10 +9,10 @@ A application for user can sign in and make your personal expense tracker that y
 * partial category selection can let you filter your records with category  
 * delete your record that you don't needed anymore.  
 ## Screen  
-![image]()
+![image](https://github.com/eaz73727/espense-tracker/blob/main/tracker.jpg)
 ## Getting Started  
 1. clone  
- `git clone https://github.com/eaz73727/espense-tracker.git`   
+ `git clone https://github.com/eaz73727/expense-tracker.git`   
 2. install modules  
  `npm install`  
 3. check .env.example for setting up your global var  
